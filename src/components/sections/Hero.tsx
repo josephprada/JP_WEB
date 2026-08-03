@@ -174,14 +174,13 @@ export function Hero() {
 
   return (
     /*
-     * Mobile has no frame scrub — only a poster — so a 200vh sticky runway is
-     * pure dead air: the first viewport of scrolling changes nothing on screen
-     * and feels like the page refuses to move. Keep the scrub theatre for
-     * `md+` only; below that the hero is one screen tall and the next section
-     * arrives on the first swipe.
+     * Mobile has no frame scrub — only a poster — so a multi-viewport sticky
+     * runway is pure dead air. One screen tall below `md`; from `md` up the
+     * sticky scrub theatre matches the original desktop behaviour exactly
+     * (260vh runway, sticky 100dvh frame, overflow hidden).
      */
     <section id="hero" className="relative h-[100svh] md:h-[260vh]">
-      <div className="relative h-full w-full overflow-clip md:sticky md:top-0 md:h-[100dvh]">
+      <div className="relative h-full w-full overflow-clip md:sticky md:top-0 md:h-[100dvh] md:overflow-hidden">
         {/* Purely presentational: the headline below carries the meaning. */}
         <div aria-hidden="true" className="absolute inset-0">
           {canScrub ? (
