@@ -40,6 +40,12 @@
 
   html {
     -webkit-text-size-adjust: 100%;
+    /*
+     * Prefer vertical pans on the document. Without this, some mobile browsers
+     * spend the first touch deciding between pan-x / pan-y / pinch against
+     * sticky+overflow ancestors before the page actually moves.
+     */
+    touch-action: pan-y;
   }
 
   body {

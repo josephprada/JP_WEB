@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# CI deploy keys (never commit)
+.deploy-keys/
