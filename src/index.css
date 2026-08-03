@@ -38,14 +38,20 @@
     border-color: var(--hairline);
   }
 
+  /*
+   * The browser chrome is part of the page on a site this deliberate about
+   * black/paper/red. Firefox takes a track/thumb pair; WebKit needs the
+   * pseudo-elements below. Square corners, no radius, matching the shape
+   * system documented above `.display`.
+   *
+   * `touch-action: pan-y` prefers vertical pans so the first swipe is not
+   * spent deciding between pan-x / pan-y against sticky ancestors.
+   */
   html {
     -webkit-text-size-adjust: 100%;
-    /*
-     * Prefer vertical pans on the document. Without this, some mobile browsers
-     * spend the first touch deciding between pan-x / pan-y / pinch against
-     * sticky+overflow ancestors before the page actually moves.
-     */
     touch-action: pan-y;
+    scrollbar-width: thin;
+    scrollbar-color: var(--hairline-strong) var(--color-ink);
   }
 
   body {
@@ -62,17 +68,6 @@
      * scroll container at all.
      */
     overflow-x: clip;
-  }
-
-  /*
-   * The browser chrome is part of the page on a site this deliberate about
-   * black/paper/red. Firefox takes a track/thumb pair; WebKit needs the
-   * pseudo-elements below. Square corners, no radius, matching the shape
-   * system documented above `.display`.
-   */
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: var(--hairline-strong) var(--color-ink);
   }
 
   ::-webkit-scrollbar {

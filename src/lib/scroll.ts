@@ -24,7 +24,11 @@ export function useSmoothScroll(enabled: boolean) {
      * momentum scrolling that feels better than anything Lenis interpolates,
      * and layering the two only creates a surface for touch handling to go
      * wrong, so Lenis simply does not run there.
+     *
+     * `any-pointer: coarse` catches phones/tablets even when a "desktop site"
+     * mode also reports a fine pointer.
      */
+    if (window.matchMedia("(any-pointer: coarse)").matches) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
     const lenis = new Lenis({ duration: 1.05, smoothWheel: true });

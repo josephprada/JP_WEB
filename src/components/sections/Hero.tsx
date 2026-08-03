@@ -175,13 +175,15 @@ export function Hero() {
   return (
     <section id="hero" className="relative h-[200vh] md:h-[260vh]">
       {/*
-        `overflow-clip`, never `hidden`. On a sticky frame, `overflow: hidden`
-        creates a scroll container that eats the first touch gesture on mobile
-        (the browser tries to scroll inside the sticky box, which cannot scroll,
-        before the document). `clip` hides overflow without becoming a scroller,
-        so the first swipe moves the page immediately.
+        Mobile uses `100svh` (small viewport): `100dvh` is taller than the
+        visible screen while the URL bar is showing, so the first swipe only
+        collapses browser chrome / fights the sticky frame and feels dead.
+        Desktop keeps `100dvh` so the scrub sequence can use the full frame.
+
+        `overflow-clip`, never `hidden`: on a sticky frame, `hidden` creates a
+        scroll container that can eat the first touch gesture on mobile.
       */}
-      <div className="sticky top-0 h-[100dvh] w-full overflow-clip">
+      <div className="sticky top-0 h-[100svh] w-full overflow-clip md:h-[100dvh]">
         {/* Purely presentational: the headline below carries the meaning. */}
         <div aria-hidden="true" className="absolute inset-0">
           {canScrub ? (
