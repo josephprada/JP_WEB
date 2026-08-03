@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="JP">
+  <title>JP</title>
+  <rect width="64" height="64" rx="14" fill="#0C0F14"/>
+  <path d="M18 44V20h8.2c6.8 0 11 3.7 11 9.4 0 5.8-4.2 9.6-11 9.6H26v5H18zm8-12.8h.6c2.6 0 4.1-1.3 4.1-3.4S29.2 24 26.6 24H26v7.2zM40 44l8-24h7.2L47 44H40z" fill="#F2A65A"/>
+</svg>

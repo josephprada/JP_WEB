@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+@import "@fontsource/anton/400.css";
+@import "@fontsource-variable/geist/index.css";
+@import "@fontsource-variable/geist-mono/index.css";
+
+/*
+ * Palette is extracted from the owner's existing assets: the CV (off-black on
+ * off-white with a single red badge) and the hero footage (black suit, red tie,
+ * red-lit backdrop). One accent, locked for the whole page.
+ * The page is dark-locked by design: the hero footage only reads on black.
+ */
+@theme {
+  --color-ink: #0b0b0c;
+  --color-ink-raised: #121214;
+  --color-ink-sunken: #050506;
+  --color-paper: #f2efe9;
+  --color-accent: #e63329;
+  --color-accent-dim: #a8231c;
+
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+}
+
+/*
+ * Shape system: everything is sharp (radius 0) with hairline rules.
+ * Documented once here so no component invents its own corner scale.
+ */
+@layer base {
+  :root {
+    --hairline: color-mix(in srgb, #f2efe9 14%, transparent);
+    --hairline-strong: color-mix(in srgb, #f2efe9 30%, transparent);
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--hairline);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    /*
+     * `clip`, never `hidden`. On body, `overflow-x: hidden` promotes body to a
+     * scroll container (the computed overflow-y resolves to `auto`), which moves
+     * the scrolling element off the document and breaks touch scrolling on
+     * mobile. `clip` suppresses the horizontal overflow without creating a
+     * scroll container at all.
+     */
+    overflow-x: clip;
+  }
+
+  /*
+   * The browser chrome is part of the page on a site this deliberate about
+   * black/paper/red. Firefox takes a track/thumb pair; WebKit needs the
+   * pseudo-elements below. Square corners, no radius, matching the shape
+   * system documented above `.display`.
+   */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--hairline-strong) var(--color-ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-ink);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--hairline-strong);
+    /* Border colour set explicitly: the sitewide `* { border-color }` rule
+       would otherwise paint this as a visible ring instead of the inset
+       padding it's meant to be. */
+    border: 3px solid var(--color-ink);
+    border-color: var(--color-ink);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-accent);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: var(--color-ink);
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* Lenis owns the scroll position; these are its required host styles. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
+}
+
+@layer components {
+  /*
+   * Uppercase Spanish needs headroom. Anton sets a tall cap height and places
+   * its acute accents high, so below ~1.10 leading the marks on CÓDIGO, ESTÁ
+   * and DISEÑO collide with the glyphs on the line above and read as noise.
+   * Measured against those exact words: 1.12 is the tightest value that stays
+   * clean, and the stacking still reads as a slab because Anton is so heavy.
+   * The top padding protects the first line's accent from whatever sits above.
+   */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    padding-top: 0.08em;
+  }
+
+  /* Small mono label above a section headline. Rationed: 3 on the whole page. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, #f2efe9 52%, transparent);
+  }
+
+  .body-copy {
+    max-width: 62ch;
+    line-height: 1.65;
+    color: color-mix(in srgb, #f2efe9 68%, transparent);
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+}
+
+/* Fixed, non-scrolling grain overlay. Never on a scrolling container. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
