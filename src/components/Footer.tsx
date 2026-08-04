@@ -1,4 +1,9 @@
-import { ArrowUpIcon, EnvelopeSimpleIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
+import {
+  ArrowUpIcon,
+  EnvelopeSimpleIcon,
+  InstagramLogoIcon,
+  WhatsappLogoIcon,
+} from "@phosphor-icons/react";
 import { CONTACT } from "../i18n/content";
 import { useLang } from "../i18n/LanguageProvider";
 import { scrollToSection } from "../lib/scroll";
@@ -13,6 +18,7 @@ export function Footer() {
 
   const socials = [
     { href: "https://wa.me/573175249226", label: "WhatsApp", Icon: WhatsappLogoIcon },
+    { href: CONTACT.instagram, label: CONTACT.instagramHandle, Icon: InstagramLogoIcon },
     { href: `mailto:${CONTACT.email}`, label: CONTACT.email, Icon: EnvelopeSimpleIcon },
   ];
 

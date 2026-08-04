@@ -66,7 +66,7 @@ the subject's face. Regenerate it alongside the frames:
 ffmpeg -i public/hero/frames/f072.webp -vf "crop=304:658:610:0" -c:v libwebp -quality 92 -f image2 public/hero/poster-mobile.webp
 ```
 
-**Horizontal framing on mobile lives in that crop offset (`581`), not in CSS.**
+**Horizontal framing on mobile lives in that crop offset (`610`), not in CSS.**
 Phone viewports are proportionally wider than the 304x658 crop, so object-cover
 scales it to the container width exactly and leaves zero horizontal overflow.
 `object-position` can only shift an image along an axis where it overflows, so
@@ -96,6 +96,23 @@ only adds a place for touch handling to fail.
 
 Neither of these is observable through programmatic `window.scrollTo`, so a
 passing scripted scroll test proves nothing about them. Check on a real handset.
+
+## The contact headline is sized in vw, not rem
+
+`HABLEMOS` is a single unbreakable word, so unlike every other headline on the
+page it cannot wrap its way out of a container it overflows. It was previously
+sized with fixed rem values at `md` and `lg`, which overran the shell by up to
+245px between 768-1023px and 238px between 1024-1279px, plus 16px on a 390px
+phone. The overflow was invisible in review because the body's `overflow-x:
+clip` silently cut it, so the headline just looked cropped.
+
+It is now `text-[22vw] md:text-[21vw] xl:text-[19rem]`. The vw values carry the
+whole range where the shell is still growing with the viewport; the rem value
+only takes over past `xl`, where the shell hits its max width and stops. Verified
+at 0 overflow from 320px to 1920px.
+
+If you change that string, re-check it. The English "LET'S TALK" has a space and
+can wrap, so it is not at risk, but a longer single word would be.
 
 ## Typography note
 

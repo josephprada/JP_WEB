@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
+import { ArrowUpRightIcon, InstagramLogoIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { CONTACT } from "../../i18n/content";
 import { useLang } from "../../i18n/LanguageProvider";
@@ -12,9 +12,15 @@ export function Contact() {
   const { t } = useLang();
   const reduce = useReducedMotion();
 
-  const rows = [
+  const rows: { label: string; value: string; href?: string; external?: boolean }[] = [
     { label: t.contact.emailLabel, value: CONTACT.email, href: `mailto:${CONTACT.email}` },
     { label: t.contact.phoneLabel, value: CONTACT.phone, href: CONTACT.phoneHref },
+    {
+      label: t.contact.instagramLabel,
+      value: CONTACT.instagramHandle,
+      href: CONTACT.instagram,
+      external: true,
+    },
     { label: t.contact.locationLabel, value: t.contact.location },
   ];
 
@@ -26,7 +32,14 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="display text-[24vw] leading-[0.82] md:text-[15rem] lg:text-[19rem]"
+          /* This headline is a single unbreakable word, so it cannot wrap its
+             way out of a container it overflows. Fixed rem sizes at md and lg
+             did exactly that: 240px between 768-1023px and 304px between
+             1024-1279px both overran the shell by up to 245px, and the
+             overflow was silently cut by the body's overflow-x. Sizing in vw
+             through that whole range keeps it scaling with the shell; the rem
+             value only takes over past xl, where the shell stops growing. */
+          className="display text-[22vw] leading-[0.82] md:text-[21vw] xl:text-[19rem]"
         >
           {t.contact.headline}
         </motion.h2>
@@ -34,7 +47,7 @@ export function Contact() {
         <div className="mt-14 grid grid-cols-1 gap-12 md:mt-20 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="body-copy text-base md:text-lg">{t.contact.lede}</p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-3">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-3">
               <a
                 href={`mailto:${CONTACT.email}`}
                 className="group inline-flex items-center justify-center gap-2.5 bg-accent px-8 py-4 font-medium text-paper transition-colors duration-200 hover:bg-accent-dim active:scale-[0.98]"
@@ -59,6 +72,19 @@ export function Contact() {
                   className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
               </a>
+              <a
+                href={CONTACT.instagram}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group inline-flex items-center justify-center gap-2.5 border border-paper/30 px-8 py-4 font-medium text-paper transition-colors duration-200 hover:border-paper hover:bg-paper hover:text-ink active:scale-[0.98]"
+              >
+                {t.contact.instagramCta}
+                <InstagramLogoIcon
+                  size={18}
+                  weight="bold"
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
             </div>
           </div>
 
@@ -73,6 +99,7 @@ export function Contact() {
                   {row.href ? (
                     <a
                       href={row.href}
+                      {...(row.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
                       className="underline decoration-paper/25 underline-offset-4 transition-colors hover:decoration-accent hover:text-accent"
                     >
                       {row.value}

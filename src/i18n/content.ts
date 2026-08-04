@@ -70,7 +70,9 @@ export interface Content {
     phoneLabel: string;
     locationLabel: string;
     location: string;
+    instagramLabel: string;
     cta: string;
+    instagramCta: string;
   };
   footer: { built: string; rights: string };
   cvViewer: { openTab: string; download: string; close: string; fallback: string };
@@ -276,7 +278,9 @@ const es: Content = {
     phoneLabel: "Teléfono",
     locationLabel: "Ubicación",
     location: "Bucaramanga, Santander, Colombia",
+    instagramLabel: "Instagram",
     cta: "Escribir un correo",
+    instagramCta: "Instagram",
   },
   footer: {
     built: "Sitio construido con React, Bun y Biome.",
@@ -484,7 +488,9 @@ const en: Content = {
     phoneLabel: "Phone",
     locationLabel: "Location",
     location: "Bucaramanga, Santander, Colombia",
+    instagramLabel: "Instagram",
     cta: "Send an email",
+    instagramCta: "Instagram",
   },
   footer: {
     built: "Built with React, Bun and Biome.",
@@ -504,5 +510,7 @@ export const CONTACT = {
   email: "developerjp0714@gmail.com",
   phone: "+57 317 524 9226",
   phoneHref: "tel:+573175249226",
+  instagram: "https://www.instagram.com/jpdesarrolladorweb/",
+  instagramHandle: "@jpdesarrolladorweb",
   cv: "/joseph-prada-cv.pdf",
 } as const;
