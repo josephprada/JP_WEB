@@ -73,6 +73,7 @@ export interface Content {
     instagramLabel: string;
     cta: string;
     instagramCta: string;
+    skillImageLabel: string;
   };
   footer: { built: string; rights: string };
   cvViewer: { openTab: string; download: string; close: string; fallback: string };
@@ -281,6 +282,7 @@ const es: Content = {
     instagramLabel: "Instagram",
     cta: "Escribir un correo",
     instagramCta: "Instagram",
+    skillImageLabel: "Skill",
   },
   footer: {
     built: "Sitio construido con React, Bun y Biome.",
@@ -491,6 +493,7 @@ const en: Content = {
     instagramLabel: "Instagram",
     cta: "Send an email",
     instagramCta: "Instagram",
+    skillImageLabel: "Skill",
   },
   footer: {
     built: "Built with React, Bun and Biome.",
@@ -513,4 +516,5 @@ export const CONTACT = {
   instagram: "https://www.instagram.com/jpdesarrolladorweb/",
   instagramHandle: "@jpdesarrolladorweb",
   cv: "/joseph-prada-cv.pdf",
+  skillImage: "/jp-skill-image.zip",
 } as const;

@@ -12,7 +12,13 @@ export function Contact() {
   const { t } = useLang();
   const reduce = useReducedMotion();
 
-  const rows: { label: string; value: string; href?: string; external?: boolean }[] = [
+  const rows: {
+    label: string;
+    value: string;
+    href?: string;
+    external?: boolean;
+    download?: boolean;
+  }[] = [
     { label: t.contact.emailLabel, value: CONTACT.email, href: `mailto:${CONTACT.email}` },
     { label: t.contact.phoneLabel, value: CONTACT.phone, href: CONTACT.phoneHref },
     {
@@ -20,6 +26,12 @@ export function Contact() {
       value: CONTACT.instagramHandle,
       href: CONTACT.instagram,
       external: true,
+    },
+    {
+      label: t.contact.skillImageLabel,
+      value: "jp-skill-image.zip",
+      href: CONTACT.skillImage,
+      download: true,
     },
     { label: t.contact.locationLabel, value: t.contact.location },
   ];
@@ -100,6 +112,7 @@ export function Contact() {
                     <a
                       href={row.href}
                       {...(row.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+                      {...(row.download ? { download: true } : {})}
                       className="underline decoration-paper/25 underline-offset-4 transition-colors hover:decoration-accent hover:text-accent"
                     >
                       {row.value}
